@@ -25,7 +25,7 @@
                     <label>Specialization:</label>
                     <input type="text" name="specialization" class="w-full border rounded p-2">
                 </div>
-                <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
+                <button type="submit" class="mt-4 bg-blue-500 text-class px-4 py-2 rounded">
                     Save Provider
                 </button>
             </form>
