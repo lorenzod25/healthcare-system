@@ -9,11 +9,12 @@ use Illuminate\Http\Request;
 class MedicalRecordController extends Controller
 {
     // Show all medical records
-    public function index()
-    {
-        $records = MedicalRecord::with('appointment.patient', 'appointment.provider')->get();
-        return view('medical_records.index', compact('records'));
-    }
+   public function index()
+{
+    $medicalRecords = MedicalRecord::with('appointment.patient', 'appointment.provider')->get();
+    return view('medical_records.index', compact('medicalRecords'));
+}
+
 
     // Show form to create a new record
     public function create()

@@ -36,7 +36,7 @@
                     <textarea name="lab_results" class="w-full border rounded px-3 py-2"></textarea>
                 </div>
 
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save Record</button>
+                <button type="submit" class="bg-blue-500 text-black px-4 py-2 rounded">Save Record</button>
             </form>
         </div>
     </div>

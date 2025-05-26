@@ -26,7 +26,7 @@
                     <textarea name="lab_results" class="w-full border rounded px-3 py-2">{{ $medicalRecord->lab_results }}</textarea>
                 </div>
 
-                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Update Record</button>
+                <button type="submit" class="bg-green-500 text-black px-4 py-2 rounded">Update Record</button>
             </form>
         </div>
     </div>
