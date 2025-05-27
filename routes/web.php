@@ -7,6 +7,7 @@ use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\MedicalRecordController; 
 use App\Http\Controllers\PrescriptionController;
+use App\Http\Controllers\BillingController;
 
 // Home Page (Public)
 Route::get('/', function () {
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('appointments', AppointmentController::class);
     Route::resource('medical-records', MedicalRecordController::class); 
     Route::resource('prescriptions', PrescriptionController::class);
+    Route::resource('billings', BillingController::class);
 
 });
 

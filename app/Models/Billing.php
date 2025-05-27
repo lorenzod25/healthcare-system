@@ -1,21 +1,25 @@
 <?php
 
+
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Prescription extends Model
+class Billing extends Model
 {
     use HasFactory;
+    
+protected $fillable = [
+    'appointment_id',
+    'amount',
+    'status',
+    'payment_method',
+    'billing_date',
+];
 
-    protected $fillable = [
-        'appointment_id',
-        'medication_name',
-        'dosage',
-        'frequency',
-        'duration',
-    ];
+
 
     public function appointment()
     {

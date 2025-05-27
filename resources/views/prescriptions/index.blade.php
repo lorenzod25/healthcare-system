@@ -34,7 +34,7 @@
                         @foreach ($prescriptions as $prescription)
                             <tr class="border-b">
                                 <td class="px-4 py-2">{{ $prescription->appointment_id }}</td>
-                                <td class="px-4 py-2">{{ $prescription->medication }}</td>
+                                <td class="px-4 py-2">{{ $prescription->medication_name }}</td>
                                 <td class="px-4 py-2">{{ $prescription->dosage }}</td>
                                 <td class="px-4 py-2">{{ $prescription->frequency }}</td>
                                 <td class="px-4 py-2">{{ $prescription->duration }}</td>

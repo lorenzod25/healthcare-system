@@ -23,7 +23,7 @@
                         <th class="border px-4 py-2">Appointment Date</th>
                         <th class="border px-4 py-2">Diagnosis</th>
                         <th class="border px-4 py-2">Treatment</th>
-                        <th class="border px-4 py-2">LAb Results</th>
+                        <th class="border px-4 py-2">Lab Results</th>
                         <th class="border px-4 py-2">Actions</th>
                     </tr>
                 </thead>
@@ -36,13 +36,15 @@
                             <td class="border px-4 py-2">{{ $record->treatment_plan }}</td>
                             <td class="border px-4 py-2">{{ $record->lab_results }}</td>
                             <td class="border px-4 py-2 flex space-x-2">
-                                <a href="{{ route('medical-records.edit', $record) }}" class="text-blue-600 hover:underline">Edit</a>
-                                <form action="{{ route('medical-records.destroy', $record) }}" method="POST" onsubmit="return confirm('Are you sure?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:underline">Delete</button>
+                              <a href="{{ route('medical-records.show', $record) }}" class="text-green-600 hover:underline">Show</a>
+                              <a href="{{ route('medical-records.edit', $record) }}" class="text-blue-600 hover:underline">Edit</a>
+                              <form action="{{ route('medical-records.destroy', $record) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:underline">Delete</button>
                                 </form>
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>
