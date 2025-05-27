@@ -10,10 +10,11 @@ class PrescriptionController extends Controller
 {
     // Show all prescriptions
     public function index()
-    {
-        $prescriptions = Prescription::with('appointment')->get();
-        return view('prescriptions.index', compact('prescriptions'));
-    }
+{
+    $prescriptions = Prescription::with(['appointment.patient', 'appointment.provider'])->get();
+    return view('prescriptions.index', compact('prescriptions'));
+}
+
 
     // Show the form to create a new prescription
     public function create()
