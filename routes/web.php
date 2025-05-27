@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProviderController;
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('appointments', AppointmentController::class);
     Route::resource('medical-records', MedicalRecordController::class); 
     Route::resource('prescriptions', PrescriptionController::class);
+    Route::get('/', [HomeController::class, 'index']);
     Route::resource('billings', BillingController::class);
 
 });
