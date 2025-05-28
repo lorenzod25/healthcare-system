@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('appointments', AppointmentController::class);
     Route::resource('medical-records', MedicalRecordController::class); 
     Route::resource('prescriptions', PrescriptionController::class);
-    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::resource('billings', BillingController::class);
 
 });

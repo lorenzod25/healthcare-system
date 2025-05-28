@@ -7,10 +7,17 @@ use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
-    // Display a list of all patients
-    public function index()
+    // Display a list of all patients with optional search
+    public function index(Request $request)
     {
-        $patients = Patient::all();
+        $query = Patient::query();
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $patients = $query->get();
+
         return view('patients.index', compact('patients'));
     }
 
@@ -20,23 +27,22 @@ class PatientController extends Controller
         return view('patients.create');
     }
 
-    //  Store a new patient in the database (merged correctly)
+    // Store a new patient in the database
     public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'dob' => 'required|date',
-        'gender' => 'required|string',
-        'contact_info' => 'nullable|string|max:255',
-        'insurance_info' => 'nullable|string|max:255',
-        'medical_history' => 'nullable|string',
-    ]);
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'dob' => 'required|date',
+            'gender' => 'required|string',
+            'contact_info' => 'nullable|string|max:255',
+            'insurance_info' => 'nullable|string|max:255',
+            'medical_history' => 'nullable|string',
+        ]);
 
-    Patient::create($request->all());
+        Patient::create($request->all());
 
-    return redirect()->route('patients.index')->with('success', 'Patient added successfully.');
-}
-
+        return redirect()->route('patients.index')->with('success', 'Patient added successfully.');
+    }
 
     // Show details for a single patient
     public function show(Patient $patient)
@@ -61,6 +67,7 @@ class PatientController extends Controller
         ]);
 
         $patient->update($request->all());
+
         return redirect()->route('patients.index')->with('success', 'Patient updated successfully.');
     }
 
@@ -68,6 +75,7 @@ class PatientController extends Controller
     public function destroy(Patient $patient)
     {
         $patient->delete();
+
         return redirect()->route('patients.index')->with('success', 'Patient deleted successfully.');
     }
 }

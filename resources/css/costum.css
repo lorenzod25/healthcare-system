@@ -1,0 +1,28 @@
+/* Custom dashboard card styles */
+.dashboard-card {
+    @apply w-full max-w-sm bg-white border border-gray-200 rounded-xl shadow-md transition duration-300 p-6 text-left hover:shadow-lg hover:scale-105;
+}
+
+.dashboard-card-icon {
+    @apply text-5xl;
+}
+
+.dashboard-card-title {
+    @apply text-2xl font-bold text-gray-800;
+}
+
+.dashboard-card-text {
+    @apply text-lg text-gray-600;
+}
+
+.dashboard-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16 place-items-center;
+}
+.cookie-heading {
+    @apply text-6xl font-extrabold leading-tight mb-6;
+}
+
+/* Subtext under the heading */
+.cookie-subtext {
+    @apply text-3xl text-gray-700 mb-4;
+}
