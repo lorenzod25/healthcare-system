@@ -8,13 +8,21 @@ use Illuminate\Http\Request;
 
 class MedicalRecordController extends Controller
 {
-    // Show all medical records
-   public function index()
-{
-    $medicalRecords = MedicalRecord::with('appointment.patient', 'appointment.provider')->get();
-    return view('medical_records.index', compact('medicalRecords'));
-}
+    // Show all medical records with optional search
+    public function index(Request $request)
+    {
+        $query = MedicalRecord::with('appointment.patient', 'appointment.provider');
 
+        if ($search = $request->input('search')) {
+            $query->whereHas('appointment.patient', function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+            });
+        }
+
+        $medicalRecords = $query->get();
+
+        return view('medical_records.index', compact('medicalRecords'));
+    }
 
     // Show form to create a new record
     public function create()
@@ -34,6 +42,7 @@ class MedicalRecordController extends Controller
         ]);
 
         MedicalRecord::create($request->all());
+
         return redirect()->route('medical-records.index')->with('success', 'Medical record created successfully.');
     }
 
@@ -46,7 +55,7 @@ class MedicalRecordController extends Controller
     // Show form to edit
     public function edit(MedicalRecord $medicalRecord)
     {
-        $appointments = Appointment::all();
+        $appointments = Appointment::with('patient', 'provider')->get();
         return view('medical_records.edit', compact('medicalRecord', 'appointments'));
     }
 
@@ -61,6 +70,7 @@ class MedicalRecordController extends Controller
         ]);
 
         $medicalRecord->update($request->all());
+
         return redirect()->route('medical-records.index')->with('success', 'Medical record updated.');
     }
 

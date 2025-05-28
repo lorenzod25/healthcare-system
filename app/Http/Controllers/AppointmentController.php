@@ -9,11 +9,27 @@ use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
-    public function index()
-    {
-        $appointments = Appointment::with(['patient', 'provider'])->get();
-        return view('appointments.index', compact('appointments'));
+    public function index(Request $request)
+{
+    $query = Appointment::with(['patient', 'provider']);
+
+    if ($request->has('search')) {
+        $search = $request->input('search');
+
+        $query->where(function ($q) use ($search) {
+            $q->whereHas('patient', function ($sub) use ($search) {
+                $sub->where('name', 'like', '%' . $search . '%');
+            })->orWhereHas('provider', function ($sub) use ($search) {
+                $sub->where('name', 'like', '%' . $search . '%');
+            });
+        });
     }
+
+    $appointments = $query->get();
+
+    return view('appointments.index', compact('appointments'));
+}
+
 
     public function create()
     {

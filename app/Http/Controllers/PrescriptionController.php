@@ -8,10 +8,20 @@ use Illuminate\Http\Request;
 
 class PrescriptionController extends Controller
 {
-    // Show all prescriptions
-    public function index()
+    // Show all prescriptions (with search functionality)
+    public function index(Request $request)
 {
-    $prescriptions = Prescription::with(['appointment.patient', 'appointment.provider'])->get();
+    $search = $request->input('search');
+
+    $prescriptions = Prescription::with(['appointment.patient', 'appointment.provider'])
+        ->when($search, function ($query, $search) {
+            $query->where('medication_name', 'like', "%{$search}%")
+                ->orWhereHas('appointment.patient', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                });
+        })
+        ->get();
+
     return view('prescriptions.index', compact('prescriptions'));
 }
 
@@ -19,11 +29,11 @@ class PrescriptionController extends Controller
     // Show the form to create a new prescription
     public function create()
     {
-        $appointments = Appointment::all(); // Needed to assign the prescription to an appointment
+        $appointments = Appointment::all();
         return view('prescriptions.create', compact('appointments'));
     }
 
-    // Store the new prescription in the database
+    // Store a new prescription
     public function store(Request $request)
     {
         $request->validate([
@@ -38,20 +48,20 @@ class PrescriptionController extends Controller
         return redirect()->route('prescriptions.index')->with('success', 'Prescription created successfully.');
     }
 
-    // Show a single prescription
+    // Show a single prescription (optional view)
     public function show(Prescription $prescription)
     {
         return view('prescriptions.show', compact('prescription'));
     }
 
-    // Show the form to edit an existing prescription
+    // Show the form to edit a prescription
     public function edit(Prescription $prescription)
     {
-        $appointments = Appointment::all(); // In case the appointment needs to be changed
+        $appointments = Appointment::all();
         return view('prescriptions.edit', compact('prescription', 'appointments'));
     }
 
-    // Update a prescription
+    // Update an existing prescription
     public function update(Request $request, Prescription $prescription)
     {
         $request->validate([

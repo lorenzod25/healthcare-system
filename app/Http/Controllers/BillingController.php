@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use App\Models\Billing;
@@ -9,9 +8,19 @@ use Illuminate\Http\Request;
 
 class BillingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $billings = Billing::with('appointment.patient')->get();
+        $query = Billing::with('appointment.patient');
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $query->whereHas('appointment.patient', function ($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        $billings = $query->get();
+
         return view('billings.index', compact('billings'));
     }
 
@@ -22,20 +31,19 @@ class BillingController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'appointment_id' => 'required|exists:appointments,id',
-        'amount' => 'required|numeric',
-        'status' => 'required|string',
-        'payment_method' => 'required|string',
-        'billing_date' => 'required|date',
-    ]);
+    {
+        $request->validate([
+            'appointment_id' => 'required|exists:appointments,id',
+            'amount' => 'required|numeric',
+            'status' => 'required|string',
+            'payment_method' => 'required|string',
+            'billing_date' => 'required|date',
+        ]);
 
-    \App\Models\Billing::create($request->all());
+        Billing::create($request->all());
 
-    return redirect()->route('billings.index')->with('success', 'Billing created successfully.');
-}
-
+        return redirect()->route('billings.index')->with('success', 'Billing created successfully.');
+    }
 
     public function show(Billing $billing)
     {

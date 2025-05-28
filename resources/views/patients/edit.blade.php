@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-2xl font-bold text-black leading-tight">
-            {{ __('✏️ Edit Patient') }}
+            ✏️ Edit Patient
         </h2>
     </x-slot>
 
@@ -55,12 +55,16 @@
                             class="w-full px-4 py-2 border border-black rounded-md focus:outline-none">{{ old('medical_history', $patient->medical_history) }}</textarea>
                     </div>
 
-                    <!-- Submit -->
+                    <!-- Actions -->
                     <div class="pt-4 text-center">
                         <button type="submit"
                             class="bg-green-500 hover:bg-green-600 text-black font-bold px-8 py-3 rounded-md shadow transition">
                             ✅ Update Patient
                         </button>
+                        <a href="{{ route('patients.index') }}"
+                            class="ml-4 text-gray-600 hover:underline">
+                            Cancel
+                        </a>
                     </div>
                 </form>
 

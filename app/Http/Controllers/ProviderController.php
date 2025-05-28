@@ -7,20 +7,26 @@ use Illuminate\Http\Request;
 
 class ProviderController extends Controller
 {
-    // Display a list of all providers
-    public function index()
+    // Display a list of all providers with search
+    public function index(Request $request)
     {
-        $providers = Provider::all();
+        $search = $request->input('search');
+
+        $providers = Provider::query()
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%")
+                      ->orWhere('specialization', 'like', "%{$search}%");
+            })
+            ->get();
+
         return view('providers.index', compact('providers'));
     }
 
-    // Show the form to create a new provider
     public function create()
     {
         return view('providers.create');
     }
 
-    // Store a newly created provider in the database
     public function store(Request $request)
     {
         $request->validate([
@@ -29,17 +35,16 @@ class ProviderController extends Controller
         ]);
 
         Provider::create($request->all());
+
         return redirect()->route('providers.index')->with('success', 'Provider added successfully.');
     }
 
-    // Show the form for editing the specified provider
     public function edit($id)
     {
         $provider = Provider::findOrFail($id);
         return view('providers.edit', compact('provider'));
     }
 
-    // Update the specified provider in the database
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -53,7 +58,6 @@ class ProviderController extends Controller
         return redirect()->route('providers.index')->with('success', 'Provider updated successfully.');
     }
 
-    // Remove the specified provider from the database
     public function destroy($id)
     {
         $provider = Provider::findOrFail($id);

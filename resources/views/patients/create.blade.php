@@ -1,73 +1,70 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-2xl font-bold text-black leading-tight">
+        <h2 class="text-2xl font-bold text-gray-800 leading-tight">
             {{ __('➕ Add New Patient') }}
         </h2>
     </x-slot>
 
-    <section class="min-h-screen py-16 bg-white">
-        <div class="max-w-3xl mx-auto px-6">
-            <div class="p-10 bg-white rounded-lg shadow-none">
+    <div class="py-10 bg-gray-50 min-h-screen">
+        <div class="max-w-3xl mx-auto bg-white p-8 rounded shadow">
+            <form method="POST" action="{{ route('patients.store') }}" class="space-y-6">
+                @csrf
 
-                <form method="POST" action="{{ route('patients.store') }}" class="space-y-6">
-                    @csrf
+                <!-- Name -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Name <span class="text-red-500">*</span></label>
+                    <input type="text" name="name" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
 
-                    <!-- Name -->
-                    <div>
-                        <label class="block text-sm font-bold text-black mb-1">Name *</label>
-                        <input type="text" name="name" required
-                            class="w-full px-4 py-2 border border-black rounded-md focus:outline-none">
-                    </div>
+                <!-- Date of Birth -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Date of Birth <span class="text-red-500">*</span></label>
+                    <input type="date" name="dob" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
 
-                    <!-- DOB -->
-                    <div>
-                        <label class="block text-sm font-bold text-black mb-1">Date of Birth *</label>
-                        <input type="date" name="dob" required
-                            class="w-full px-4 py-2 border border-black rounded-md focus:outline-none">
-                    </div>
+                <!-- Gender -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Gender <span class="text-red-500">*</span></label>
+                    <select name="gender" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
 
-                    <!-- Gender -->
-                    <div>
-                        <label class="block text-sm font-bold text-black mb-1">Gender *</label>
-                        <select name="gender" required
-                            class="w-full px-4 py-2 border border-black rounded-md focus:outline-none">
-                            <option value="">Select gender</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                    </div>
+                <!-- Contact Info -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Contact Info</label>
+                    <input type="text" name="contact_info"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
 
-                    <!-- Contact Info -->
-                    <div>
-                        <label class="block text-sm font-bold text-black mb-1">Contact Info</label>
-                        <input type="text" name="contact_info"
-                            class="w-full px-4 py-2 border border-black rounded-md focus:outline-none">
-                    </div>
+                <!-- Insurance Info -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Insurance Info</label>
+                    <input type="text" name="insurance_info"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
 
-                    <!-- Insurance Info -->
-                    <div>
-                        <label class="block text-sm font-bold text-black mb-1">Insurance Info</label>
-                        <input type="text" name="insurance_info"
-                            class="w-full px-4 py-2 border border-black rounded-md focus:outline-none">
-                    </div>
+                <!-- Medical History -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Medical History</label>
+                    <textarea name="medical_history" rows="4"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
 
-                    <!-- Medical History -->
-                    <div>
-                        <label class="block text-sm font-bold text-black mb-1">Medical History</label>
-                        <textarea name="medical_history" rows="4"
-                            class="w-full px-4 py-2 border border-black rounded-md focus:outline-none"></textarea>
-                    </div>
-
-                    <!-- Submit -->
-                    <div class="pt-4 text-center">
-                        <button type="submit"
-                            class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-8 py-3 rounded-md shadow transition">
-                            ➕ Add Patient
-                        </button>
-                    </div>
-                </form>
-
-            </div>
+                <!-- Submit Button -->
+                <div class="flex justify-start gap-4 pt-2">
+                    <button type="submit"
+                        class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-6 py-2 rounded-md shadow transition">
+                        ➕ Add Patient
+                    </button>
+                    <a href="{{ route('patients.index') }}" class="text-gray-600 hover:underline self-center">Cancel</a>
+                </div>
+            </form>
         </div>
-    </section>
+    </div>
 </x-app-layout>

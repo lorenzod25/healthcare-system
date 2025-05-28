@@ -1,33 +1,38 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold text-gray-800 leading-tight">
-            {{ __('Medical Record Details') }}
-        </h2>
-        <a href="{{ route('medical-records.index') }}" class="text-blue-600 hover:underline">← Back to Records</a>
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <h2 class="text-3xl font-bold text-gray-800">
+                {{ __('🩺 Medical Record for Patient: ') }} 
+                <span class="text-black">{{ $medicalRecord->appointment->patient->name ?? 'N/A' }}</span>
+            </h2>
+            <a href="{{ route('medical-records.index') }}" class="text-base text-blue-600 hover:underline">
+                ← Back to Records
+            </a>
+        </div>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 bg-white shadow-md rounded p-6">
-            <h3 class="text-2xl font-bold mb-4">Medical Record for {{ $medicalRecord->appointment->patient->name ?? 'N/A' }}</h3>
+    <div class="py-12 bg-gray-50 min-h-screen">
+        <div class="max-w-4xl mx-auto bg-white shadow-lg p-10 rounded-2xl">
+            <div class="space-y-6 text-lg text-gray-900 leading-relaxed">
+                <div>
+                    <label class="block text-gray-600 font-semibold mb-1">📅 Appointment Date:</label>
+                    <div class="bg-gray-100 px-4 py-3 rounded-md">{{ $medicalRecord->appointment->scheduled_at ?? 'N/A' }}</div>
+                </div>
 
-            <div class="mb-4">
-                <strong>Appointment Date:</strong>
-                <p>{{ $medicalRecord->appointment->scheduled_at ?? 'N/A' }}</p>
-            </div>
+                <div>
+                    <label class="block text-gray-600 font-semibold mb-1">🩻 Diagnosis:</label>
+                    <div class="bg-gray-100 px-4 py-3 rounded-md">{{ $medicalRecord->diagnosis }}</div>
+                </div>
 
-            <div class="mb-4">
-                <strong>Diagnosis:</strong>
-                <p>{{ $medicalRecord->diagnosis }}</p>
-            </div>
+                <div>
+                    <label class="block text-gray-600 font-semibold mb-1">💊 Treatment Plan:</label>
+                    <div class="bg-gray-100 px-4 py-3 rounded-md">{{ $medicalRecord->treatment_plan }}</div>
+                </div>
 
-            <div class="mb-4">
-                <strong>Treatment:</strong>
-                <p>{{ $medicalRecord->treatment }}</p>
-            </div>
-
-            <div class="mb-4">
-                <strong>Notes:</strong>
-                <p>{{ $medicalRecord->notes }}</p>
+                <div>
+                    <label class="block text-gray-600 font-semibold mb-1">🧪 Lab Results:</label>
+                    <div class="bg-gray-100 px-4 py-3 rounded-md">{{ $medicalRecord->lab_results }}</div>
+                </div>
             </div>
         </div>
     </div>

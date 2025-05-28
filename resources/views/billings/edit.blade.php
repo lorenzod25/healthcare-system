@@ -1,15 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold text-gray-800 leading-tight">
-            {{ __('Edit Billing Record') }}
+        <h2 class="text-2xl font-bold text-gray-800">
+            {{ __('✏️ Edit Billing Record') }}
         </h2>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 bg-white p-6 rounded shadow">
+    <div class="py-10 bg-gray-50 min-h-screen">
+        <div class="max-w-4xl mx-auto bg-white p-8 rounded shadow">
             @if ($errors->any())
-                <div class="mb-4 text-red-600">
-                    <ul>
+                <div class="mb-6 text-red-600">
+                    <ul class="list-disc pl-5">
                         @foreach ($errors->all() as $error)
                             <li>• {{ $error }}</li>
                         @endforeach
@@ -17,13 +17,14 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('billings.update', $billing->id) }}">
+            <form method="POST" action="{{ route('billings.update', $billing->id) }}" class="space-y-6">
                 @csrf
                 @method('PUT')
 
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-bold mb-2">Appointment ID</label>
-                    <select name="appointment_id" class="w-full border rounded px-3 py-2">
+                <!-- Appointment -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Appointment</label>
+                    <select name="appointment_id" required class="w-full border border-gray-300 rounded px-4 py-2 shadow-sm">
                         @foreach ($appointments as $appointment)
                             <option value="{{ $appointment->id }}" {{ $billing->appointment_id == $appointment->id ? 'selected' : '' }}>
                                 #{{ $appointment->id }} — {{ $appointment->patient->name ?? 'N/A' }} with {{ $appointment->provider->name ?? 'N/A' }}
@@ -32,19 +33,24 @@
                     </select>
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-bold mb-2">Amount</label>
-                    <input type="number" step="0.01" name="amount" value="{{ $billing->amount }}" class="w-full border rounded px-3 py-2" required>
+                <!-- Amount -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
+                    <input type="number" name="amount" step="0.01" value="{{ $billing->amount }}"
+                        class="w-full border border-gray-300 rounded px-4 py-2 shadow-sm" required>
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-bold mb-2">Billing Date</label>
-                    <input type="date" name="billing_date" value="{{ $billing->billing_date }}" class="w-full border rounded px-3 py-2" required>
+                <!-- Billing Date -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Billing Date</label>
+                    <input type="date" name="billing_date" value="{{ $billing->billing_date }}"
+                        class="w-full border border-gray-300 rounded px-4 py-2 shadow-sm" required>
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-bold mb-2">Payment Method</label>
-                    <select name="payment_method" class="w-full border rounded px-3 py-2">
+                <!-- Payment Method -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
+                    <select name="payment_method" class="w-full border border-gray-300 rounded px-4 py-2 shadow-sm">
                         <option value="">Select method</option>
                         <option value="cash" {{ $billing->payment_method == 'cash' ? 'selected' : '' }}>Cash</option>
                         <option value="credit_card" {{ $billing->payment_method == 'credit_card' ? 'selected' : '' }}>Credit Card</option>
@@ -54,18 +60,23 @@
                     </select>
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-bold mb-2">Status</label>
-                    <select name="status" class="w-full border rounded px-3 py-2">
+                <!-- Status -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select name="status" class="w-full border border-gray-300 rounded px-4 py-2 shadow-sm">
                         <option value="unpaid" {{ $billing->status == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
                         <option value="paid" {{ $billing->status == 'paid' ? 'selected' : '' }}>Paid</option>
                         <option value="pending" {{ $billing->status == 'pending' ? 'selected' : '' }}>Pending</option>
                     </select>
                 </div>
 
-                <button type="submit" class="bg-blue-600 text-black px-4 py-2 rounded hover:bg-blue-700">
-                    Update Billing
-                </button>
+                <!-- Actions -->
+                <div class="flex justify-start gap-4">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-black font-semibold px-6 py-2 rounded shadow">
+                        💾 Update Billing
+                    </button>
+                    <a href="{{ route('billings.index') }}" class="text-gray-600 hover:underline self-center">Cancel</a>
+                </div>
             </form>
         </div>
     </div>
