@@ -18,7 +18,7 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
 <div class="text-center mb-4">
    
-    <a href="/" class="text-12xl sm:text-7xl font-extrabold text-blue-700 tracking-wide leading-tight">
+    <a href="/" class="text-6xl sm:text-7xl font-extrabold text-blue-700 tracking-wide leading-tight">
         HealthPro<span class="text-green-600">+</span>
     </a>
 
